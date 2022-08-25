@@ -11,26 +11,33 @@ class Stack<T> implements StackInterface<T> {
   /// You can only use this list for implementing the methods
   final _plates = <T>[];
   @override
-  bool get isEmpty => throw UnimplementedError();
+  bool get isEmpty => _plates.isEmpty;
 
   @override
-  int get length => throw UnimplementedError();
+  int get length => _plates.length;
 
   @override
   T pop() {
     // TODO: implement pop
-    throw UnimplementedError();
+    if(length == 0){
+      throw Exception("Stack empty");
+    }
+    return _plates.removeLast();
   }
 
   @override
   void push(T) {
+    _plates.add(T);
     // TODO: implement push
   }
 
   @override
   T top() {
     // TODO: implement top
-    throw UnimplementedError();
+    if(length == 0){
+      throw Exception("Stack empty");
+    }
+    return _plates[length - 1];
   }
 }
 
@@ -53,10 +60,19 @@ class PancakeHandler extends Stack<Pancake> {
   // TODO: Override `pop` method
   @override
   Pancake pop([int n = 1]) {
-    return _plates.first;
+    for(int i = 0; i<(n < length? n-1 : length-1); i++){
+      super.pop();
+    } //pops max available pancakes if n is greater than length
+    return super.pop();
   }
 
   Pancake remove(int from, int to) {
+    if(_plates[from -1].hasTopping || _plates[to].hasTopping){
+      throw Exception("Robot can't handle this task");
+    }
+    for(int i = to; i>from; i--){
+      _plates.removeAt(i);
+    }
     return _plates.removeAt(from);
   }
 }
@@ -64,6 +80,13 @@ class PancakeHandler extends Stack<Pancake> {
 extension ChefsPancakeHandler on PancakeHandler {
   int inspect(bool Function(Pancake) predicate) {
     // TODO: implement inspect
-    throw UnimplementedError();
+    var count = 0;
+    for(int i = length-1; i >= 0; i--){
+      if(!predicate(_plates[i])){
+        _plates.removeAt(i);
+        count++;
+      }
+    }
+    return count;
   }
 }

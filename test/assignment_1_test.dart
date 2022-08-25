@@ -85,10 +85,10 @@ void main() {
     });
     test("Inspect", () {
       expect(stack.inspect((p) => p.serialNumber == p.weight), equals(3));
-      // expect(stack.pop(), equals(Pancake(7, false, 7)));
-      // expect(stack.remove(1, 2), equals(Pancake(3, false, 3)));
-      // expect(stack.top(), equals(Pancake(1, true, 1)));
-      // expect(stack.length, equals(1));
+      expect(stack.pop(), equals(Pancake(7, false, 7)));
+      expect(stack.remove(1, 2), equals(Pancake(3, false, 3)));
+      expect(stack.top(), equals(Pancake(1, true, 1)));
+      expect(stack.length, equals(1));
     });
     test("pop", () {
       stack.inspect((p) => p.serialNumber == p.weight);
